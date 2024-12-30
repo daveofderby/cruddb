@@ -26,6 +26,7 @@ app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
+// These are the routes
 app.get("/stories/new", (req, res) => {
   res.render("./stories/new");
 });
