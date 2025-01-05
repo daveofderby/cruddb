@@ -4,54 +4,26 @@
   <form action="/stories/<%= story._id %>?_method=PATCH" method="POST">
     <legend>Story id: <%= story._id %></legend>
     <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input
-        type="text"
-        id="title"
-        class="form-control"
-        name="title"
-        value="<%=story.title%>"
-      />
+      <h2>Title</h2>
+      <p><%=story.title%></p>
     </div>
     <div class="mb-3">
-      <label for="category" class="form-label">Category</label>
-      <select id="category" class="form-select" name="category">
-        <option><%=story.category%></option>
-        <option>child</option>
-        <option>adult</option>
-        <option>adventure</option>
-        <option>horror</option>
-        <option>other</option>
-      </select>
+      <h2>Category</h2>
+      <p><%=story.category%></p>
     </div>
     <div class="mb-3">
-      <label for="lat" class="form-label">Latitude</label>
-      <input
-        type="text"
-        id="lat"
-        name="lat"
-        class="form-control"
-        value="<%=story.lat%>"
-      />
+      <h2>Latitude</h2>
+      <p><%=story.lat%></p>
     </div>
     <div class="mb-3">
-      <label for="long" class="form-label">Longitude</label>
-      <input
-        type="text"
-        id="long"
-        class="form-control"
-        name="long"
-        value="<%=story.long%>"
-      />
+      <h2>Longitude</h2>
+      <p><%=story.long%></p>
     </div>
-    <button type="submit" class="btn btn-primary">Update</button>
 
-    <a href="/stories"
-      ><button type="button" class="btn btn-secondary">Cancel</button></a
-    >
+    <a href="/stories"><button type="button" class="btn btn-secondary">Back</button></a>
   </form>
-  <form action="/stories/<%= story._id %>?_method=DELETE" method="POST">
-    <button class="btn btn-danger">Delete</button>
+  <form action="/stories/<%= story._id %>/edit" method="GET">
+    <button class="btn btn-primary">Edit</button>
   </form>
 </div>
 

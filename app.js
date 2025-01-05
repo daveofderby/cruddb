@@ -28,7 +28,19 @@ app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
-// These are the routes
+// ROUTES
+app.get("/stories/:id", async (req, res) => {
+  const { id } = req.params;
+  const story = await Story.findById(id);
+  res.render("./stories/show", { story, id, categories });
+});
+
+app.get("/stories/:id/edit", async (req, res) => {
+  const { id } = req.params;
+  const story = await Story.findById(id);
+  res.render("./stories/edit", { story, id, categories });
+});
+
 app.get("/stories/new", (req, res) => {
   res.render("./stories/new", { categories });
 });
@@ -39,23 +51,6 @@ app.post("/stories", async (req, res) => {
   res.redirect("/stories");
 });
 
-app.delete("/stories/:id", async (req, res) => {
-  const { id } = req.params;
-  console.log("delete route");
-  await Story.findByIdAndDelete(id);
-  res.redirect(303, "/stories");
-});
-
-// app.get("/comments/:id/edit", (req, res) => {
-//   const { id } = req.params;
-//   const comment = data.find((comment) => {
-//     if (comment.id === id) {
-//       return comment;
-//     }
-//   });
-//   res.render("./comments/edit", { ...comment });
-// });
-
 app.patch("/stories/:id", async (req, res) => {
   const { id } = req.params;
   console.log("patch route");
@@ -64,10 +59,11 @@ app.patch("/stories/:id", async (req, res) => {
   res.redirect(303, "/stories");
 });
 
-app.get("/stories/:id", async (req, res) => {
+app.delete("/stories/:id", async (req, res) => {
   const { id } = req.params;
-  const story = await Story.findById(id);
-  res.render("./stories/edit", { story, id, categories });
+  console.log("delete route");
+  await Story.findByIdAndDelete(id);
+  res.redirect(303, "/stories");
 });
 
 app.get("/stories", async (req, res) => {
