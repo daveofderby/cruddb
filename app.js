@@ -8,6 +8,8 @@ const Story = require("./models/story");
 const { v4: uuid } = require("uuid");
 const methodOverride = require("method-override");
 
+const categories = ["child", "adult", "adventure", "horror", "Scifi", "other"];
+
 // connect to the local mongo database
 mongoose
   .connect("mongodb://127.0.0.1:27017/storyBook")
@@ -22,30 +24,26 @@ mongoose
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // app.use(express.static(path.join(__dirname, "/public")));
-// app.use(methodOverride("_method"));
+app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
 // These are the routes
 app.get("/stories/new", (req, res) => {
-  res.render("./stories/new");
+  res.render("./stories/new", { categories });
 });
 
 app.post("/stories", async (req, res) => {
-  console.log(req.body);
   const newStory = new Story(req.body);
   await newStory.save();
-  console.log(newStory);
-
-  // .insertOne({ title, category, long, lat })
-  // .then((story) => {
-  //   console.log(story);
-  // })
-  // .catch((err) => {
-  //   console.log("Error Saving:");
-  //   console.log(err);
-  // });
   res.redirect("/stories");
+});
+
+app.delete("/stories/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log("delete route");
+  await Story.findByIdAndDelete(id);
+  res.redirect(303, "/stories");
 });
 
 // app.get("/comments/:id/edit", (req, res) => {
@@ -58,33 +56,18 @@ app.post("/stories", async (req, res) => {
 //   res.render("./comments/edit", { ...comment });
 // });
 
-// app.patch("/comments/:id", (req, res) => {
-//   const { id } = req.params;
-//   const newComment = req.body.comment;
-//   const foundComment = data.find((comment) => {
-//     if (comment.id === id) {
-//       return comment;
-//     }
-//   });
-//   foundComment.comment = newComment;
-//   res.redirect(303, "/comments");
-// });
-
-// app.delete("/comments/:id", (req, res) => {
-//   const { id } = req.params;
-//   console.log("delete route");
-//   data = data.filter((comment) => {
-//     if (comment.id !== id) {
-//       return comment;
-//     }
-//   });
-//   res.redirect(303, "/comments");
-// });
+app.patch("/stories/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log("patch route");
+  console.log(req.body);
+  await Story.findByIdAndUpdate(id, req.body);
+  res.redirect(303, "/stories");
+});
 
 app.get("/stories/:id", async (req, res) => {
   const { id } = req.params;
   const story = await Story.findById(id);
-  res.render("./stories/show", { story, id });
+  res.render("./stories/edit", { story, id, categories });
 });
 
 app.get("/stories", async (req, res) => {

@@ -1,17 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Comment</title>
-  </head>
-  <body>
-    <form action="/comments/<%= id %>?_method=PATCH" method="POST">
-      <label for="comment">Comment</label>
-      <input type="text" name="comment" id="comment" value="<%= comment %>" />
-      <p>by <%= username %></p>
-      <button>Submit</button>
-      <a href="/comments">Back to comments</a>
-    </form>
-  </body>
-</html>
+<%- include('../partials/header')%>
+
+<div class="container">
+  <form action="/stories/<%= story._id %>?_method=PATCH" method="POST">
+    <legend>Story id: <%= story._id %></legend>
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input
+        type="text"
+        id="title"
+        class="form-control"
+        name="title"
+        value="<%=story.title%>"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="category" class="form-label">Category</label>
+      <select id="category" class="form-select" name="category">
+        <% for(let category of categories){ %>
+          <option value="<%=category%>" <%= story.category === category ? 'selected' : '' %> ><%=category%></option>
+        <% } %>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="lat" class="form-label">Latitude</label>
+      <input
+        type="text"
+        id="lat"
+        name="lat"
+        class="form-control"
+        value="<%=story.lat%>"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="long" class="form-label">Longitude</label>
+      <input
+        type="text"
+        id="long"
+        class="form-control"
+        name="long"
+        value="<%=story.long%>"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+
+    <a href="/stories"
+      ><button type="button" class="btn btn-secondary">Cancel</button></a
+    >
+  </form>
+  <form action="/stories/<%= story._id %>?_method=DELETE" method="POST">
+    <button class="btn btn-danger">Delete</button>
+  </form>
+</div>
+
+<%- include('../partials/footer')%>

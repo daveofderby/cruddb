@@ -10,11 +10,9 @@
       <div class="mb-3">
         <label for="category" class="form-label">Category</label>
         <select id="category" name="category" class="form-select">
-          <option>child</option>
-          <option>adult</option>
-          <option>adventure</option>
-          <option>horror</option>
-          <option>other</option>
+          <% for(let category of categories){ %>
+          <option value="<%=category%>"><%=category%></option>
+          <% } %>
         </select>
       </div>
       <div class="mb-3">
