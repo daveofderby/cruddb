@@ -8,7 +8,7 @@ const Story = require("./models/story");
 const { v4: uuid } = require("uuid");
 const methodOverride = require("method-override");
 
-const categories = ["child", "adult", "adventure", "horror", "Scifi", "other"];
+const categories = ["child", "adult", "adventure", "horror", "scifi", "other"];
 
 // connect to the local mongo database
 mongoose

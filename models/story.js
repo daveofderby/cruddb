@@ -7,7 +7,7 @@ const storySchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ["child", "adult", "adventure", "horror", "other"],
+    enum: ["child", "adult", "adventure", "horror", "scifi", "other"],
   },
   lat: Number,
   long: Number,
